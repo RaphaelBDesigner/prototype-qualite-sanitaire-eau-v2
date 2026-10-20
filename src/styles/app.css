@@ -697,3 +697,24 @@
   width: calc(100% - 1rem);
   justify-content: center;
 }
+
+/* ---------- Colonne mobile sur ordinateur et tablette ---------- */
+
+/* À partir de 576 px, l'application s'affiche dans une iframe de largeur mobile
+ * sur fond noir (exception validée : le noir n'est pas un token DSFR, cf. NOTES.md). */
+html.cadre-mobile,
+html.cadre-mobile body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.cadre-mobile__iframe {
+  display: block;
+  width: 390px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  border: 0;
+}

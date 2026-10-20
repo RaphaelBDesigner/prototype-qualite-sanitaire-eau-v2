@@ -7,25 +7,28 @@ import { ChoixSecteur } from "./pages/ChoixSecteur";
 import { FicheSecteur } from "./pages/FicheSecteur";
 import { PageIntrouvable } from "./pages/PageIntrouvable";
 
-export const router = createBrowserRouter(
-  [
-    {
-      element: <Layout />,
-      children: [
-        { index: true, element: <Accueil /> },
-        { path: "carte", element: <Carte /> },
-        { path: "commune/:code", element: <ChoixSecteur /> },
-        { path: "secteur/:id", element: <FicheSecteur /> },
-        { path: "article/:slug", element: <EnConstruction titre="Article" /> },
-        { path: "faq", element: <EnConstruction titre="Questions fréquentes" /> },
-        { path: "accessibilite", element: <EnConstruction titre="Accessibilité" /> },
-        { path: "mentions-legales", element: <EnConstruction titre="Mentions légales" /> },
-        { path: "donnees-personnelles", element: <EnConstruction titre="Données personnelles" /> },
-        { path: "gestion-des-cookies", element: <EnConstruction titre="Gestion des cookies" /> },
-        { path: "plan-du-site", element: <EnConstruction titre="Plan du site" /> },
-        { path: "*", element: <PageIntrouvable /> },
-      ],
-    },
-  ],
-  { basename: import.meta.env.BASE_URL.replace(/\/$/, "") },
-);
+// Fabrique : en mode « cadre mobile », la page parente ne crée le routeur
+// que lorsqu'elle affiche l'application directement (fenêtre étroite).
+export const creerRouteur = () =>
+  createBrowserRouter(
+    [
+      {
+        element: <Layout />,
+        children: [
+          { index: true, element: <Accueil /> },
+          { path: "carte", element: <Carte /> },
+          { path: "commune/:code", element: <ChoixSecteur /> },
+          { path: "secteur/:id", element: <FicheSecteur /> },
+          { path: "article/:slug", element: <EnConstruction titre="Article" /> },
+          { path: "faq", element: <EnConstruction titre="Questions fréquentes" /> },
+          { path: "accessibilite", element: <EnConstruction titre="Accessibilité" /> },
+          { path: "mentions-legales", element: <EnConstruction titre="Mentions légales" /> },
+          { path: "donnees-personnelles", element: <EnConstruction titre="Données personnelles" /> },
+          { path: "gestion-des-cookies", element: <EnConstruction titre="Gestion des cookies" /> },
+          { path: "plan-du-site", element: <EnConstruction titre="Plan du site" /> },
+          { path: "*", element: <PageIntrouvable /> },
+        ],
+      },
+    ],
+    { basename: import.meta.env.BASE_URL.replace(/\/$/, "") },
+  );

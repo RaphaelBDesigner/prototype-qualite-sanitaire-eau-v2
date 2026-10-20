@@ -14,6 +14,7 @@
 | Note A B C D | Fiche UDI, Analyses, Paramètre | Pas d'équivalent DSFR. Composant custom, couleurs DSFR. |
 | Repères numérotés 1 à 4 | Fiche UDI, « Votre secteur » | Pas d'équivalent DSFR. Liste ordonnée custom, couleurs DSFR. |
 | Graphique d'évolution | Volet Paramètre | DSFR Chart ne gère a priori ni le seuil en pointillés ni la ligne verticale du prélèvement affiché (à confirmer à l'installation). Graphique SVG custom, couleurs DSFR. Le tableau sert d'alternative accessible. |
+| Bandes noires autour de la colonne mobile | Ordinateur et tablette (≥ 576 px) | Mise en page de présentation, sans équivalent DSFR. **Exception validée** : fond noir `#000` (le noir n'est pas un token DSFR). Voir « Colonne mobile » dans le socle technique. |
 
 ## Décisions validées
 
@@ -63,6 +64,10 @@
 - **Version DSFR** : `@codegouvfr/react-dsfr` 1.35 embarque le DSFR **1.14.2** (et non 1.15.x comme indiqué dans `CLAUDE.md`). À mettre à jour quand react-dsfr passera en 1.15.
 - **Communes** : `src/data/communes.json` est généré depuis le référentiel officiel `@etalab/decoupage-administratif` (`npm run generer:communes`), trié par population. Il n'est chargé qu'à la première saisie (≈ 490 Ko compressé). L'API Géoplateforme est réservée à la recherche d'adresse sur la carte.
 - **Routes non encore construites** (carte, choix du secteur, articles, FAQ, pages du footer) : page « en construction ».
+- **Colonne mobile (v2)** : sur ordinateur et tablette, le site garde la mise en page mobile, dans une colonne centrée de **390 px** sur toute la hauteur de la fenêtre, avec des bandes noires de chaque côté (sans faux cadre de téléphone ni arrondis). Sous 576 px (point de rupture sm du DSFR), rien ne change.
+  - **Pourquoi une iframe** : les media queries du DSFR (header avec burger, volets en bottom sheet, carte puis panneau…) dépendent de la largeur du viewport, pas de celle d'un conteneur. Une colonne CSS de 390 px garderait la mise en page desktop ; dans une iframe de 390 px, le viewport fait 390 px et tout le DSFR se comporte comme sur un téléphone.
+  - **Fonctionnement** (`src/components/CadreMobile.tsx`, `src/lib/cadreMobile.ts`) : à partir de 576 px, la page principale n'affiche que l'iframe, qui charge la même application à la même adresse. L'application sait qu'elle est dans le cadre (`window.self !== window.top`), ce qui évite toute récursion. À chaque changement de route, elle envoie l'adresse et le titre à la page parente, qui met son URL à jour (`history.replaceState`) : la barre d'adresse reste juste, un lien direct ou un rechargement (via le `404.html` de GitHub Pages) rouvre la bonne page dans la colonne, et le bouton retour du navigateur fonctionne. Au redimensionnement, on passe d'un mode à l'autre en gardant la page affichée. Les liens vers d'autres sites ouverts dans le cadre s'ouvrent dans la fenêtre entière.
+  - **Accessibilité** : l'iframe porte un `title` ; la page parente ne défile pas (seule l'iframe défile, pas de double barre de défilement).
 
 ## Écarts avec les maquettes — Accueil
 
