@@ -40,6 +40,14 @@
 - **« Vérifier mon raccordement »** : `Alert` info petite, fermable, « bientôt disponible ».
 - **FAQ** : accordéons DSFR.
 
+### Modale d'accueil (avertissement prototype, v2)
+- **Contenu** repris tel quel de la maquette : titre « Bienvenue / sur ce prototype », paragraphe, deux puces en gras, case à cocher DSFR « Je m'engage à ne pas partager ce prototype. », bouton tertiaire pleine largeur « J'ai compris » (`ButtonsGroup`).
+- **Exception validée aux règles de `CLAUDE.md`** : la modale (`createModal`, ouverte par défaut) est **volontairement bloquante**. Pas de bouton « Fermer » (masqué en CSS, seule surcharge sur le composant), pas de fermeture par Échap (intercepté avant le JS DSFR) ni par un clic sur le fond (option native `concealingBackdrop={false}`). Le focus reste piégé par le DSFR.
+- **Validation** : « J'ai compris » sans la case cochée affiche l'état d'erreur natif de la case (`state="error"`, message lié à la case et annoncé), puis place le focus sur la case. L'erreur disparaît dès que la case est cochée.
+- **Accessibilité** : le titre est le titre de la modale (`aria-labelledby`). Le DSFR 1.14 piège le focus mais ne rend pas le reste de la page inerte : tant que la modale est ouverte, les autres éléments de la page reçoivent l'attribut `inert`.
+- **Mémorisation** : l'acceptation est gardée dans `sessionStorage` (avec try/catch). La modale ne réapparaît ni à chaque page ni au rechargement pendant la session, mais elle réapparaît dans un nouvel onglet ou après fermeture du navigateur. Si le stockage est indisponible, elle réapparaît à chaque chargement.
+- **Colonne mobile** : la modale fait partie de l'application, donc sur ordinateur elle s'affiche dans l'iframe de 390 px, et une seule fois (la page parente n'affiche que l'iframe).
+
 ### Volets
 - Fermeture par « Fermer », Échap ou clic sur le fond.
 - **Navigation entre volets** : une seule modale dont le contenu suit une pile. Depuis Analyses, ouvrir un paramètre puis le fermer (bouton, Échap ou clic sur le fond) revient à Analyses ; le focus revient sur la ligne cliquée.

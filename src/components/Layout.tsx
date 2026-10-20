@@ -5,6 +5,7 @@ import { SkipLinks } from "@codegouvfr/react-dsfr/SkipLinks";
 import { Badge } from "@codegouvfr/react-dsfr/Badge";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Outlet, ScrollRestoration } from "react-router-dom";
+import { AvertissementPrototype } from "./AvertissementPrototype";
 
 const brandTop = (
   <>
@@ -64,6 +65,7 @@ export function Layout() {
         ]}
       />
       <Display />
+      <AvertissementPrototype />
       <ScrollRestoration />
     </>
   );

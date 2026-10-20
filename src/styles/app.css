@@ -718,3 +718,10 @@ html.cadre-mobile body {
   margin: 0 auto;
   border: 0;
 }
+
+/* ---------- Modale d'accueil (avertissement prototype) ---------- */
+
+/* Modale volontairement bloquante : pas de bouton « Fermer » (exception validée, cf. NOTES.md). */
+.avertissement-prototype .fr-modal__header .fr-btn--close {
+  display: none;
+}
