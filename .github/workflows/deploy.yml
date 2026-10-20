@@ -2,9 +2,7 @@ name: Déploiement GitHub Pages
 
 on:
   push:
-    # Temporaire : GitHub n'autorise la publication que depuis la branche par défaut du dépôt,
-    # qui est encore claude/new-session-82l0uy. À retirer quand main sera la branche par défaut.
-    branches: [main, claude/new-session-82l0uy]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

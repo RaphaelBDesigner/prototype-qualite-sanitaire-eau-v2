@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // GitHub Pages sert le site sous /<nom-du-repo>/
-  base: '/prototype-qualite-sanitaire-eau/',
+  base: '/prototype-qualite-sanitaire-eau-v2/',
 })

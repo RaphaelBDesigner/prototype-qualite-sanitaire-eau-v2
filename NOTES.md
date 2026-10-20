@@ -1,5 +1,7 @@
 # NOTES.md — Écarts DSFR et décisions
 
+> **Version 2** : copie du prototype faite le 20/10/2026 depuis le dépôt `prototype-qualite-sanitaire-eau`, à partir du commit `4013f70`, pour y faire de nouvelles modifications. La version 1 reste en ligne sur https://raphaelbdesigner.github.io/prototype-qualite-sanitaire-eau/ ; la version 2 est publiée sur https://raphaelbdesigner.github.io/prototype-qualite-sanitaire-eau-v2/.
+
 ## Composants sans équivalent DSFR
 
 | Élément | Où | Décision |
