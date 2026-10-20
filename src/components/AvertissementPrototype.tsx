@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createModal } from "@codegouvfr/react-dsfr/Modal";
-import { Checkbox } from "@codegouvfr/react-dsfr/Checkbox";
 import { ButtonsGroup } from "@codegouvfr/react-dsfr/ButtonsGroup";
 
 /** Acceptation mémorisée pour la session de l'onglet (cf. NOTES.md). */
@@ -23,19 +22,12 @@ function memoriserAcceptation() {
 }
 
 const modale = createModal({ id: "avertissement-prototype", isOpenedByDefault: !dejaAccepte() });
-// Le composant Checkbox numérote ses cases : `${id}-0` pour la première.
-const ID_ENGAGEMENT = "avertissement-prototype-engagement";
-const ID_CASE = `${ID_ENGAGEMENT}-0`;
 
 /**
  * Modale d'accueil bloquante : volontairement sans bouton « Fermer », ni fermeture par Échap
- * ou par un clic sur le fond (exception validée, cf. NOTES.md). Seul « J'ai compris » la ferme,
- * une fois l'engagement coché.
+ * ou par un clic sur le fond (exception validée, cf. NOTES.md). Seul « J'ai compris » la ferme.
  */
 export function AvertissementPrototype() {
-  const [engage, setEngage] = useState(false);
-  const [erreur, setErreur] = useState(false);
-
   // Échap : intercepté avant le JS DSFR (phase de capture) tant que la modale est ouverte.
   useEffect(() => {
     if (!modale.isOpenedByDefault) return;
@@ -67,18 +59,13 @@ export function AvertissementPrototype() {
   if (!modale.isOpenedByDefault) return null;
 
   const valider = () => {
-    if (!engage) {
-      setErreur(true);
-      document.getElementById(ID_CASE)?.focus();
-      return;
-    }
     memoriserAcceptation();
     modale.close();
   };
 
   return (
     <modale.Component
-      className="avertissement-prototype"
+      className="avertissement-prototype modale-centree"
       title={
         <>
           Bienvenue
@@ -89,34 +76,16 @@ export function AvertissementPrototype() {
       // Option native du DSFR : un clic sur le fond ne ferme pas la modale.
       concealingBackdrop={false}
     >
-      <p>Ce prototype IA sert à tester une idée auprès d'utilisateurs.</p>
+      <p>Cette expérience a été créée et utilisée dans le cadre de tests utilisateurs.</p>
       <ul>
         <li>
-          <strong>Il n'est pas terminé et voué à évoluer.</strong>
+          <strong>En cours de conception</strong>
         </li>
         <li>
-          <strong>Il est réservé à l'équipe projet et aux testeurs.</strong>
+          <strong>Réservé à l'équipe projet et aux testeurs</strong>
         </li>
       </ul>
-      <Checkbox
-        id={ID_ENGAGEMENT}
-        options={[
-          {
-            label: "Je m'engage à ne pas partager ce prototype.",
-            nativeInputProps: {
-              checked: engage,
-              // Message d'erreur DSFR lié à la case (annoncé aussi par la zone aria-live du composant).
-              "aria-describedby": erreur ? `${ID_ENGAGEMENT}-desc-error` : undefined,
-              onChange: (event) => {
-                setEngage(event.target.checked);
-                if (event.target.checked) setErreur(false);
-              },
-            },
-          },
-        ]}
-        state={erreur ? "error" : "default"}
-        stateRelatedMessage="Vous devez vous engager à ne pas partager ce prototype pour continuer."
-      />
+      <p>Je m'engage à ne pas partager ce prototype.</p>
       <ButtonsGroup buttons={[{ children: "J'ai compris", priority: "tertiary", onClick: valider }]} />
     </modale.Component>
   );
